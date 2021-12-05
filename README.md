@@ -1,8 +1,13 @@
 # ansible-primeiro
-Primeira aplicação de ansible
 
+Aplicação Ansible estruturada.
 
-Aplicação vagrant + ansible
+Sumario da hierarquia de pastas:
 
-Essa aplicação sobe 2 maquinas virtuais, uma que age como agente ansible e outra como destino remoto, a maquina agente vai instalar todas as dependencias e configurar um servidor wordpress de maneira basica.
+ansible = Diretorio com todas as configurações do Ansible
+-- Roles = Diretorio com as configurações separadas por tipo, mysql, webserver e wordpress
+-- group_vars = Todas as variaveis configuradas
 
+ssh-key - Diretorio onde o vagrant armazena as chaves privadas para o acesso do ansible
+
+Em roles na pasta ansible existe as tasks, handlers e afins, são basicamente as tarefas que o ansible vai executar.
