@@ -1,10 +1,5 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
-   config.vm.provider "virtualbox" do |vb|
-     vb.memory = 2048
-     vb.cpus = 1
-   end
-
 
   config.vm.define "ansible" do |ab|
     ab.vm.network "public_network", ip: "192.168.1.147"
@@ -25,7 +20,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "wordpress" do |wp|
     wp.vm.provider "virtualbox" do |vb|
       vb.memory=1024
-      vb.cpu=1
+      vb.cpus=1
     end
     wp.vm.network "public_network", ip: "192.168.1.146"
     wp.vm.synced_folder ".", "/vagrant"
@@ -37,7 +32,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "mysql" do |bd|
     bd.vm.provider "virtualbox" do |vb|
       vb.memory=2048
-      vb.cpu=1
+      vb.cpus=1
     end
     bd.vm.network "public_network", ip: "192.168.1.145"
     bd.vm.synced_folder ".", "/vagrant"
