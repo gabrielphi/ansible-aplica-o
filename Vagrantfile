@@ -23,10 +23,26 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "wordpress" do |wp|
+    wp.vm.provider "virtualbox" do |vb|
+      vb.memory=1024
+      vb.cpu=1
+    end
     wp.vm.network "public_network", ip: "192.168.1.146"
     wp.vm.synced_folder ".", "/vagrant"
     wp.vm.synced_folder ".vagrant", "/vagrant/.vagrant"
     wp.vm.provision "shell",
+    inline: "cat /vagrant/ssh-key/ansible.pub > ~/.ssh/authorized_keys"
+  end
+
+  config.vm.define "mysql" do |bd|
+    bd.vm.provider "virtualbox" do |vb|
+      vb.memory=2048
+      vb.cpu=1
+    end
+    bd.vm.network "public_network", ip: "192.168.1.145"
+    bd.vm.synced_folder ".", "/vagrant"
+    bd.vm.synced_folder ".vagrant", "/vagrant/.vagrant"
+    bd.vm.provision "shell",
     inline: "cat /vagrant/ssh-key/ansible.pub > ~/.ssh/authorized_keys"
   end
 
