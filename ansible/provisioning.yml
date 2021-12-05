@@ -1,16 +1,16 @@
 ---
-- hosts: all
+- hosts: database
   handlers:
-    - name: restart apache
+    - name: restart mysql
       service:
-        name: apache2
+        name: mysql
         state: restarted
       become: yes
 
   tasks:
-    - name: 'Instala pacotes de dependencia do sistema operacional'
+    - name: 'Instala pacotes de dependencia do MYSQL'
       apt:
-        name: ['php5', 'apache2', 'libapache2-mod-php5', 'php5-gd', 'libssh2-php', 'php5-mcrypt', 'mysql-server-5.6', 'python-mysqldb', 'php5-mysql']
+        name: ['mysql-server-5.6', 'python-mysqldb']
         state: latest
       become: yes
 
@@ -27,6 +27,34 @@
         password: 12345
         priv: 'wordpress_db.*:ALL'
         state: present
+        host: "{{ item }}"
+      with_items:
+        - 'localhost'
+        - '127.0.0.1'
+        - '192.168.1.146'
+
+    - name: 'Copia do Arquivo de configuração'
+      copy:
+        src: '../files/my.cnf'
+        dest: '/etc/mysql/my.cnf'
+      become: yes
+      notify:
+        - restart mysql
+
+- hosts: wordpress
+  handlers:
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
+      become: yes
+
+  tasks:
+    - name: 'Instala pacotes de dependencia do sistema operacional'
+      apt:
+        name: ['php5', 'apache2', 'libapache2-mod-php5', 'php5-gd', 'libssh2-php', 'php5-mcrypt', 'php5-mysql']
+        state: latest
+      become: yes
 
     - name: 'Download Wordpress conf'
       get_url:
@@ -56,6 +84,7 @@
         - { regex: 'database_name_here', value: 'wordpress_db'}
         - { regex: 'username_here', value: 'wordpress_user'}
         - { regex: 'password_here', value: '12345'}
+        - { regex: 'localhost', value: '192.168.1.145'}
 
     - name: 'Copia do Apache'
       copy:

@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"G:/ambiente_dev/wordpress","disabled":false,"__vagrantfile":true},"/vagrant/.vagrant":{"guestpath":"/vagrant/.vagrant","hostpath":"G:/ambiente_dev/wordpress/.vagrant","disabled":false,"__vagrantfile":true}}}

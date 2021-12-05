@@ -6,7 +6,6 @@ Vagrant.configure("2") do |config|
     ab.vm.provision "shell",
       inline: "apt-get install software-properties-common && \
                apt-add-repository ppa:ansible/ansible && \
-               add-apt-repository ppa:ondrej/php && \
                apt-get update -y && \
                apt-get install -y ansible && \
                ssh-keygen -t rsa -f /vagrant/ssh-key/ansible -N '' <<< y
